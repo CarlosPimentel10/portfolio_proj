@@ -15,7 +15,7 @@ def profile(request):
     context = {
         'profile': profile
     }
-    return render(request, 'portfolioApp/templates/profile.html', context)
+    return render(request, 'profile.html', context)
 
 @login_required
 def edit_profile(request):
@@ -26,14 +26,14 @@ def edit_profile(request):
         form = UserProfileForm(request.POST, instance=profile)
         if form.is_valid():
             form.save()
-            return redirect('profile')
+            return redirect('profile.html')
     else:
         form = UserProfileForm(instance=profile)
 
     context = {
         'form': form
     }
-    return render(request, 'portfolioApp/templates/edit_profile.html', context)
+    return render(request, 'edit_profile.html', context)
 
 def map_view(request):
     # Retrieve all registered users' locations
@@ -42,4 +42,5 @@ def map_view(request):
     context = {
         'users': users
     }
-    return render(request, 'portfolioApp/map.html', context)
+    return render(request, 'map.html', context)
+
