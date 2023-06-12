@@ -1,9 +1,8 @@
-from django.shortcuts import render
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .forms import UserProfileForm
-from django.shortcuts import render
 from .models import CustomUser
+
 # Create your views here.
 
 
@@ -26,7 +25,7 @@ def edit_profile(request):
         form = UserProfileForm(request.POST, instance=profile)
         if form.is_valid():
             form.save()
-            return redirect('profile.html')
+            return redirect('profile')
     else:
         form = UserProfileForm(instance=profile)
 
@@ -43,4 +42,3 @@ def map_view(request):
         'users': users
     }
     return render(request, 'map.html', context)
-

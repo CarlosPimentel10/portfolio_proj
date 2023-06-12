@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,9 +8,13 @@
     <title>Django Portfolio</title>
 </head>
 <body>
-    <h1>User Profile</h1>
-    <p>Username: {{ profile.user.username }}</p>
-    <p>Email: {{ profile.user.email }}</p>
+    <h1>Edit Profile</h1>
+    <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+    </form>
+
     <!-- Display other profile fields as desired -->
 
 </body>
