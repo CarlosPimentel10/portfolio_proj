@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .forms import UserProfileForm
+from django.shortcuts import render
+from .models import CustomUser
 # Create your views here.
 
 
@@ -13,7 +15,7 @@ def profile(request):
     context = {
         'profile': profile
     }
-    return render(request, 'portfolioApp/profile.html', context)
+    return render(request, 'portfolioApp/templates/profile.html', context)
 
 @login_required
 def edit_profile(request):
@@ -31,4 +33,13 @@ def edit_profile(request):
     context = {
         'form': form
     }
-    return render(request, 'portfolioApp/edit_profile.html', context)
+    return render(request, 'portfolioApp/templates/edit_profile.html', context)
+
+def map_view(request):
+    # Retrieve all registered users' locations
+    users = CustomUser.objects.exclude(location=None)
+
+    context = {
+        'users': users
+    }
+    return render(request, 'portfolioApp/map.html', context)

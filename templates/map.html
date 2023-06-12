@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Add Leaflet CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css" />
+    <!-- Add Leaflet JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio User Map</title>
+    <style>
+        #map {
+            height: 100vh;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <script>
+        // Initialize the map
+        var map = L.map('map').setView([0, 0], 2);
+
+        // Add the tile layer (replace 'your.mapbox.access.token' with your actual access token)
+        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiY3BpbWVudGVsMTAiLCJhIjoiY2xmNzN5M2NvMTFiazNxcWhsbHpjeG50ZCJ9.3HRr4PdxwmwdHRQgsU4oyg', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+            id: 'mapbox/streets-v11',
+            tileSize: 512,
+            zoomOffset: -1
+        }).addTo(map);
+
+        // Add user markers to the map
+        var users = JSON.parse('{{ users|safe }}');
+        users.forEach(function(user) {
+            var marker = L.marker([user.location.y, user.location.x]).addTo(map);
+            marker.bindPopup('<strong>' + user.username + '</strong><br>' +
+                            'Home Address: ' + user.home_address + '<br>' +
+                            'Phone Number: ' + user.phone_number);
+        });
+    </script>
+</body>
+</html>
