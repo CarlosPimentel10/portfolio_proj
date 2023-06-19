@@ -1,3 +1,4 @@
+{% comment %} {% load static %} {% endcomment %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,9 +9,15 @@
     
     <!-- Add Leaflet JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js"></script>
+    <!--mapbox-->
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio User Map</title>
-    <style>
+    <title>User Locations Map</title>
+    {% load leaflet_tags %}
+    {% leaflet_css %}
+    {% leaflet_js %}
+    <style>       
         #map {
             height: 100vh;
          
@@ -19,45 +26,34 @@
 </head>
 <body>
     <div id="map"></div>
-    <script>
-        // Wait for the DOM to load
-        document.addEventListener('DOMContentLoaded', function() {
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+    // Wait for the DOM to load
+    document.addEventListener('DOMContentLoaded', function() {
         // Replace 'YOUR_MAPBOX_ACCESS_TOKEN' with your actual Mapbox access token
         var accessToken = 'pk.eyJ1IjoiY3BpbWVudGVsMTAiLCJhIjoiY2xmNzN5M2NvMTFiazNxcWhsbHpjeG50ZCJ9.3HRr4PdxwmwdHRQgsU4oyg';
 
         // Create the Leaflet map and specify the map's container
-        var map = L.map('map').setView([0, 0], 13);
+        var map = L.map('map').setView([0, 0], 2);
 
-        // Add the Mapbox tile layer to the map
+        // Add the tile layer
         L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=' + accessToken, {
             attribution: 'Map data &copy; <a href="https://www.mapbox.com/">Mapbox</a>',
+            maxZoom: 18,
             id: 'mapbox/streets-v11', // Replace with your desired Mapbox style
             tileSize: 512,
-            zoomOffset: -1
+            zoomOffset: -1,
         }).addTo(map);
 
-        // Get the user's location using the Geolocation API
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function(position) {
-            var lat = position.coords.latitude;
-            var lon = position.coords.longitude;
+        var user_locations = {{ user_locations|safe }};
 
-            // Create a marker at the user's location
-            var marker = L.marker([lat, lon]).addTo(map);
-
-            // Update the map's view to center on the user's location
-            map.setView([lat, lon], 13);
-            }, function(error) {
-            console.error('Error getting user location:', error);
-            });
-        } else {
-            console.error('Geolocation is not supported by this browser.');
-        }
+        user_locations.forEach(function(location) {
+            var marker = L.marker([location.lat, location.lng]).addTo(map);
+            marker.bindPopup('<h3>' + location.name + '</h3>');
         });
-
-    </script>
-
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    });
+</script>
     
 </body>
 </html>

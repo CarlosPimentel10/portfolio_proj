@@ -4,6 +4,7 @@ from django.contrib.auth import login, authenticate
 from .forms import UserProfileForm
 from .models import CustomUser
 
+
 # Create your views here.
 def home(request):
     return render(request, 'home.html')
@@ -61,10 +62,14 @@ def edit_profile(request):
     return render(request, 'edit_profile.html', context)
 
 def map_view(request):
-    # Retrieve all registered users' locations
     users = CustomUser.objects.exclude(location=None)
-
-    context = {
-        'users': users
-    }
+    user_locations = [
+        {
+            'name': user.username,
+            'lat': user.location.y,
+            'lng': user.location.x
+        }
+        for user in users
+    ]
+    context = {'user_locations': user_locations}
     return render(request, 'map.html', context)
