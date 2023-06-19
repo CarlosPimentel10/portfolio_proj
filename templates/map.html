@@ -1,22 +1,26 @@
-{% comment %} {% load static %} {% endcomment %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- Add Leaflet CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
     
     <!-- Add Leaflet JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>
     <!--mapbox-->
-    
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js"></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css" rel="stylesheet" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio User Map</title>
     <title>User Locations Map</title>
-    {% load leaflet_tags %}
-    {% leaflet_css %}
-    {% leaflet_js %}
+   
     <style>       
         #map {
             height: 100vh;
@@ -36,22 +40,23 @@
 
         // Create the Leaflet map and specify the map's container
         var map = L.map('map').setView([0, 0], 2);
-
+        
         // Add the tile layer
         L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=' + accessToken, {
             attribution: 'Map data &copy; <a href="https://www.mapbox.com/">Mapbox</a>',
-            maxZoom: 18,
+            maxZoom: 19,
             id: 'mapbox/streets-v11', // Replace with your desired Mapbox style
             tileSize: 512,
             zoomOffset: -1,
         }).addTo(map);
 
         var user_locations = {{ user_locations|safe }};
-
+               
         user_locations.forEach(function(location) {
             var marker = L.marker([location.lat, location.lng]).addTo(map);
             marker.bindPopup('<h3>' + location.name + '</h3>');
         });
+        
     });
 </script>
     
