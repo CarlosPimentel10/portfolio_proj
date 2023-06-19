@@ -47,10 +47,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.gis',
-    'portfolioApp',
+    'portfolio_app',
 ]
 
-AUTH_USER_MODEL = 'portfolioApp.CustomUser'
+AUTH_USER_MODEL = 'portfolio_app.CustomUser'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -62,7 +62,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'portfolioProj.urls'
+ROOT_URLCONF = 'portfolio_proj.urls'
 
 TEMPLATES = [
     {
@@ -80,7 +80,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'portfolioProj.wsgi.application'
+WSGI_APPLICATION = 'portfolio_proj.wsgi.application'
 
 
 # Database
