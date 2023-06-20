@@ -30,3 +30,18 @@ div.breadcrumbs a{
     background: #10284e;
     color: #fff;
 } 
+
+.user-tools{
+    margin-right: 0 auto;
+    margin-top: 30px;
+}
+
+.user-avatar, .user-logout {
+    display: inline-block;
+    margin: 0 auto;
+}
+
+.user-link-space {
+    margin-right: 10px;
+}
+
