@@ -1,5 +1,5 @@
 {% load static %}
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top mb-5">
     <div class="container">
       <a class="navbar-brand" href="index.html">
         <img src="{% static 'img/logo.png' %}" width=50 class="logo" alt="">
@@ -30,7 +30,8 @@
             <a class="nav-link" href="{% url 'signup'%}"
           >
             <a class="nav-link" href="{% url 'signup' %}">
-              <i class="fas fa-user-plus"></i> Register</a>
+              <button type="button" class="btn btn-outline-light">Register</button>
+            </a>
           </li>
           <li 
           {% if 'login' in request.path %}
@@ -41,9 +42,8 @@
             <a class="nav-link" href="{% url 'login'%}"
           >
             <a class="nav-link" href="{% url 'login' %}">
-              <i class="fas fa-sign-in-alt"></i>
-
-              Login</a>
+              <button type="button" class="btn btn-outline-success">Login</button>
+              </a>
           </li>
         </ul>
       </div>
