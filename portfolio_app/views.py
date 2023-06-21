@@ -59,17 +59,14 @@ def profile(request):
 
 @login_required
 def edit_profile(request):
-    # Retrieve the current user's profile
-    profile = request.user.userprofile
-
     if request.method == 'POST':
-        form = UserProfileForm(request.POST, instance=profile)
+        form = UserProfileForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
             return redirect('profile')
     else:
-        form = UserProfileForm(instance=profile)
-
+        form = UserProfileForm(instance=request.user)
+    
     context = {
         'form': form
     }
@@ -87,3 +84,5 @@ def map_view(request):
     ]
     context = {'user_locations': user_locations}
     return render(request, 'map.html', context)
+
+
