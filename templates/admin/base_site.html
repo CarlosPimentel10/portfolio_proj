@@ -3,10 +3,22 @@
 
 {% block branding %}
     <h1 id="head">
-        <img src="{% static 'images/logo.png' %}" alt="Portfolio APP" class="brand_img" width=50 /> Admin Area
+        <img src="{% static 'images/logo.png' %}" alt="Portfolio APP" class="brand_img" width="50" /> Admin Area
     </h1>
 {% endblock %}
 
 {% block extrastyle %}
+    {{ block.super }}
     <link rel="stylesheet" href="{% static 'css/admin.css' %}" />
+{% endblock %}
+
+{% block userlinks %}
+    {{ block.super }}
+    <div id="user-tools">      
+        <div class="user-logout">
+            <a href="{% url 'admin:logout' %}" title="Logout">
+                <img src="{% static 'images/right-from-bracket-solid.svg' %}" width=20 alt="Logout" />
+            </a>
+        </div>
+    </div>
 {% endblock %}

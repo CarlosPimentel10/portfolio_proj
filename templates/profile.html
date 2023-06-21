@@ -1,21 +1,61 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+
+    <!-- Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
     <title>Django Portfolio</title>
 </head>
 <body>
-    <h1>User Profile</h1>
-    <p>Username: {{ profile.user.username }}</p>
-    <p>Email: {{ profile.user.email }}</p>
-    <a href=""></a>
-    <p>location {{ profile.user.location }}</p>
-     <!-- Include an iframe to load the location.html file -->
-    <!--Location-->
-    <iframe src="map.html" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-    <!-- Display other profile fields as desired -->
+    
+<h1>User Profile</h1>
+<p>Username: {{ profile.user.username }}</p>
+<p>Email: {{ profile.user.email }}</p>
+{% comment %} <p>Location: {{ profile.user.location }}</p> {% endcomment %}
+<p>Location: <span id="city-name"></span></p>
+<!-- Map container -->
+<div id="map" style="width: 700px; height: 500px;"></div>
+<script>
+    var locationString = "{{ profile.user.location }}";
+    var coordinates = locationString.substring(locationString.indexOf("(") + 1, locationString.indexOf(")")).split(" ");
+    var latitude = parseFloat(coordinates[1]);
+    var longitude = parseFloat(coordinates[0]);
+
+    // Create the map and set its initial view
+    var map = L.map('map').setView([latitude, longitude], 13);
+
+    // Add a tile layer to the map
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+        maxZoom: 18,
+    }).addTo(map);
+
+    // Reverse geocoding to get the city name
+    fetch('https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=' + latitude + '&lon=' + longitude)
+        .then(response => response.json())
+        .then(data => {
+            var city = data.address.city;
+            var country = data.address.country;
+            var cityName = city + ', ' + country;
+
+            // Display the city name in the user profile
+            document.getElementById('city-name').textContent = cityName;
+        })
+        .catch(error => console.log(error));
+
+    // Add a marker to the map at the specified location
+    L.marker([latitude, longitude]).addTo(map);
+</script>
+
+
+
 
   
 </body>
