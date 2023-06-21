@@ -1,8 +1,11 @@
 from django import forms
-from .models import CustomUser
+from django.contrib.auth.forms import UserCreationForm
+from portfolio_app.models import CustomUser
 
 
-class UserProfileForm(forms.ModelForm):
+class UserProfileForm(UserCreationForm):
+    name = forms.CharField()
+
     class Meta:
         model = CustomUser
-        fields = ['home_address', 'phone_number', 'location']
+        fields = ['name', 'username', 'password1', 'password2']

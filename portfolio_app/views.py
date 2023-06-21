@@ -3,6 +3,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
 from .forms import UserProfileForm
 from .models import CustomUser
+from django.shortcuts import render, redirect
+from django.contrib.auth.forms import UserCreationForm
+from django.urls import reverse
 
 
 # Create your views here.
@@ -16,20 +19,26 @@ def login(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('home')
+            return redirect(reverse('admin:index'))  # Redirect to the admin index page
     return render(request, 'login.html')
 
-from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
 
 def signup(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = UserProfileForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('home')
+            name = form.cleaned_data['name']
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password1']
+
+            # Create the CustomUser instance
+            user = CustomUser.objects.create_user(username=username, password=password)
+            user.name = name
+            user.save()
+
+            return redirect('login')  # Redirect to the login page
     else:
-        form = UserCreationForm()
+        form = UserProfileForm()
     return render(request, 'signup.html', {'form': form})
 
 
