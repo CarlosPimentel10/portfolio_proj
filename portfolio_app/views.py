@@ -2,10 +2,11 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
 from .forms import UserProfileForm
-from .models import CustomUser
+from .models import CustomUser, UserProfile
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse
+
+
 
 
 # Create your views here.
@@ -33,8 +34,12 @@ def signup(request):
 
             # Create the CustomUser instance
             user = CustomUser.objects.create_user(username=username, password=password)
-            user.name = name
+            # user.name = name
             user.save()
+             # Create the UserProfile instance
+            user_profile = UserProfile(user=user, name=name)
+            user_profile.save()
+            
 
             return redirect('login')  # Redirect to the login page
     else:
