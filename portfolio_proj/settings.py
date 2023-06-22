@@ -165,3 +165,5 @@ MEDIA_URL = '/media/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
 ACCOUNT_SIGNUP_URL = 'accounts/signup/'
+
+AUDITLOG_INCLUDE_ALL_MODELS = True

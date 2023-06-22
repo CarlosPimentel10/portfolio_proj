@@ -8,7 +8,7 @@ from django.urls import reverse
 from django.contrib.auth import update_session_auth_hash
 from .forms import CustomUserForm
 from django.contrib.auth.forms import SetPasswordForm
-from auditlog.models import log
+from auditlog.models import LogEntry
 
 # Create your views here.
 def home(request):
@@ -19,11 +19,19 @@ def login(request):
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
-        log.create(request.user, 'login')
 
         if user is not None:
             login(request, user)
-            return redirect(reverse('admin:index'))  # Redirect to the admin index page
+
+            # Log the user login event
+            log_entry = LogEntry.objects.log_create(
+                instance=user,
+                action='Login',
+                user=request.user
+            )
+
+            return redirect('admin:index')  # Redirect to the admin index page
+
     return render(request, 'login.html')
 
 
