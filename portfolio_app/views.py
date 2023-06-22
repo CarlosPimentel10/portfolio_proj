@@ -29,23 +29,25 @@ def signup(request):
     if request.method == 'POST':
         form = UserProfileForm(request.POST)
         if form.is_valid():
+            print(request.POST)  # Print the form data for debugging
             name = form.cleaned_data['name']
             username = form.cleaned_data['username']
             password = form.cleaned_data['password1']
 
             # Create the CustomUser instance
-            user = CustomUser.objects.create_user(username=username, password=password)
-            # user.name = name
+            user = form.save(commit=False)
+            user.set_password(password)
             user.save()
-             # Create the UserProfile instance
+
+            # Create the UserProfile instance
             user_profile = UserProfile(user=user, name=name)
             user_profile.save()
-            
 
             return redirect('login')  # Redirect to the login page
     else:
         form = UserProfileForm()
     return render(request, 'signup.html', {'form': form})
+
 
 
 @login_required

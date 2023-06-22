@@ -1,0 +1,47 @@
+#header{
+    height: 50px;
+    background-color: #5e5e60;
+    color: #fff;
+}
+
+#branding h1{
+    color: #fff;
+}
+
+a:link, 
+a:visited {
+    color: #10284e;
+}
+
+div.breadcrumbs {
+    background: #30caa0;
+    color: #fff;
+}
+
+div.breadcrumbs a{
+    color: #333;
+}
+
+.module h2, .module caption, .inline-group h2{
+    background: #30caa0;
+}
+
+.button input[type=submit], input[type=button], .submit-row input, a.button {
+    background: #10284e;
+    color: #fff;
+} 
+
+.user-tools{
+    margin-right: 0 auto;
+    margin-top: 30px;
+}
+
+.user-avatar, .user-logout {
+    display: inline-block;
+    margin: 0 auto;
+}
+
+.user-link-space {
+    margin-right: 10px;
+}
+

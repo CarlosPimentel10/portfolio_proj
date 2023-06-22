@@ -27,9 +27,7 @@
           {% else %}
           class="nav-item mr-3"
           {% endif %}>
-            <a class="nav-link" href="{% url 'signup'%}"
-          >
-            <a class="nav-link" href="{% url 'signup' %}">
+            <a class="nav-link" href="{% url 'account_signup' %}">
               <button type="button" class="btn btn-outline-light">Register</button>
             </a>
           </li>
@@ -39,11 +37,9 @@
           {% else %}
           class="nav-item mr-3"
           {% endif %}>           
-          <a class="nav-link" href="{% url 'admin:login' %}">
+          <a class="nav-link" href="{% url 'account_login' %}">
             <button type="button" class="btn btn-outline-success mt-3">Login</button>
-          </a>
-              
-              </a>
+          </a>              
           </li>
         </ul>
       </div>

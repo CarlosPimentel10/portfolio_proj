@@ -1,10 +1,16 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from portfolio_app.models import CustomUser
-from django.contrib.auth.forms import UserChangeForm
+from portfolio_app.models import CustomUser, UserProfile
 
 
 
+""" class UserProfileForm(UserCreationForm):
+    name = forms.CharField()
+
+    class Meta:
+        model = CustomUser
+        fields = ['name', 'username', 'password1', 'password2']
+ """
 class UserProfileForm(UserCreationForm):
     name = forms.CharField()
 
@@ -12,7 +18,14 @@ class UserProfileForm(UserCreationForm):
         model = CustomUser
         fields = ['name', 'username', 'password1', 'password2']
 
-from django.contrib.auth.forms import UserChangeForm, SetPasswordForm
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        name = self.cleaned_data['name']
+        if commit:
+            user.save()
+            user_profile = UserProfile(user=user, name=name)
+            user_profile.save()
+        return user
 
 """ class CustomUserForm(forms.ModelForm):
     class Meta:
