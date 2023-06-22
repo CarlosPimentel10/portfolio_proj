@@ -5,8 +5,9 @@ from .forms import UserProfileForm
 from .models import CustomUser, UserProfile
 from django.shortcuts import render, redirect
 from django.urls import reverse
-
-
+from django.contrib.auth import update_session_auth_hash
+from .forms import CustomUserForm
+from django.contrib.auth.forms import SetPasswordForm
 
 
 # Create your views here.
@@ -57,15 +58,17 @@ def profile(request):
     }
     return render(request, 'profile.html', context)
 
+
 @login_required
 def edit_profile(request):
+    user = request.user
     if request.method == 'POST':
-        form = UserProfileForm(request.POST, instance=request.user)
+        form = CustomUserForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
             return redirect('profile')
     else:
-        form = UserProfileForm(instance=request.user)
+        form = CustomUserForm(instance=user)
     
     context = {
         'form': form
