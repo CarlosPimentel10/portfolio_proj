@@ -1,8 +1,11 @@
 from django.test import TestCase, Client
 from django.urls import reverse
 from django.contrib.auth import get_user_model
+from .models import CustomUser, UserProfile
+from django.contrib.gis.geos import Point
 
 
+# VIEWS TEST
 User = get_user_model()
 
 
@@ -95,3 +98,33 @@ class MapViewTest(TestCase):
         client = Client()
         response = client.get(reverse('map_view'))
        
+
+# TEST FOR MODELS
+
+class UserModelTestCase(TestCase):
+    def test_user_profile_creation(self):
+        user_details = {
+            'username':'',
+            'password': '',
+            'home_address': '',
+            'phone_number': '',
+            'location':'',
+            
+            }
+        user = CustomUser.objects.create_user(**user_details)
+        user_profile = UserProfile.objects.create(user=user)
+
+        self.assertEqual(user_profile.user, user)
+    
+    def test_user_profile_str_repr(self):
+        user_details = {
+            'username': 'testuser',
+            'password': 'testpassword',
+            'home_address': 'Test Address',
+            'phone_number': '1234567890',
+            'location': Point(1, 1)
+        }
+        user = CustomUser.objects.create_user(**user_details)
+        user_profile = UserProfile.objects.create(user=user)
+
+        self.assertEqual(str(user_profile), user_details['username'])
