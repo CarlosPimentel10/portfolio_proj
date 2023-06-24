@@ -50,7 +50,7 @@
         }).addTo(map);
 
         var user_locations = {{ user_locations|safe }};
-               
+        
         user_locations.forEach(function(location) {
             var marker = L.marker([location.lat, location.lng]).addTo(map);
             marker.bindPopup('<h3>' + location.name + '</h3>');

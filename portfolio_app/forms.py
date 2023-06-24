@@ -27,11 +27,6 @@ class UserProfileForm(UserCreationForm):
             user_profile.save()
         return user
 
-""" class CustomUserForm(forms.ModelForm):
-    class Meta:
-        model = CustomUser
-        fields = ['username', 'email', 'home_address']
- """
 
 class CustomUserForm(forms.ModelForm):
     password1 = forms.CharField(label='New Password', widget=forms.PasswordInput)

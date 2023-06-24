@@ -9,6 +9,7 @@ from django.contrib.auth import update_session_auth_hash
 from .forms import CustomUserForm
 from django.contrib.auth.forms import SetPasswordForm
 from auditlog.models import LogEntry
+from allauth.account.views import SignupView
 
 # Create your views here.
 def home(request):
@@ -35,28 +36,16 @@ def login(request):
     return render(request, 'login.html')
 
 
-def signup(request):
-    if request.method == 'POST':
-        form = UserProfileForm(request.POST)
-        if form.is_valid():
-            print(request.POST)  # Print the form data for debugging
-            name = form.cleaned_data['name']
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password1']
+class CustomSignupView(SignupView):
+    template_name = 'signup.html'
+    success_url = 'login'  
 
-            # Create the CustomUser instance
-            user = form.save(commit=False)
-            user.set_password(password)
-            user.save()
-
-            # Create the UserProfile instance
-            user_profile = UserProfile(user=user, name=name)
-            user_profile.save()
-
-            return redirect('login')  # Redirect to the login page
-    else:
-        form = UserProfileForm()
-    return render(request, 'signup.html', {'form': form})
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        profile = form.instance.userprofile
+        profile.name = form.cleaned_data['name']
+        profile.save()
+        return response
 
 
 

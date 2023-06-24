@@ -89,6 +89,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                
             ],
         },
     },
@@ -165,5 +166,5 @@ MEDIA_URL = '/media/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
 ACCOUNT_SIGNUP_URL = 'accounts/signup/'
-
+ACCOUNT_FORMS = {'signup': 'portfolio_app.forms.CustomUserForm'}
 AUDITLOG_INCLUDE_ALL_MODELS = True
