@@ -165,6 +165,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
-ACCOUNT_SIGNUP_URL = 'accounts/signup/'
+# ACCOUNT_SIGNUP_URL = 'accounts/signup/'
+ACCOUNT_SIGNUP_TEMPLATE = 'templates/signup.html'
+
 ACCOUNT_FORMS = {'signup': 'portfolio_app.forms.CustomUserForm'}
 AUDITLOG_INCLUDE_ALL_MODELS = True

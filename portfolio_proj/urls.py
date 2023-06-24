@@ -11,7 +11,6 @@ urlpatterns = [
     path('user/<int:pk>/profile/', views.profile, name='user_profile'),
     path('accounts/profile/', views.profile, name='profile'),
     path('accounts/edit_profile/', views.edit_profile, name='edit_profile'),
-    path('signup/', views.CustomSignupView.as_view(), name='account_signup'),
     path('accounts/map/', views.map_view, name='map'),
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
