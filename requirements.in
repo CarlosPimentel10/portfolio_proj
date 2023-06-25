@@ -1,0 +1,7 @@
+django
+psycopg2
+gunicorn
+auditlog
+django-allauth
+django-extensions
+django-leaflet
